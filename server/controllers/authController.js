@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 const jwt = require('jsonwebtoken');
-const {sendVerificationEmail} = require ('../ultils/mailer');
+const { sendVerificationEmail } = require('../ultils/mailer');
 
 exports.signup = async (req, res) => {
     const {email, verificationCode} = req.body;
@@ -11,8 +11,8 @@ exports.signup = async (req, res) => {
         if (!codeDoc.exists || codeDoc.data().code !== verificationCode) {
             return res.status(401).json({error: 'Invalid verification code'});
         }
-        await db.collection('users').doc(email).set({email});
-        await sendVerificationEmail(email);
+    await db.collection('users').doc(email).set({email});
+    // No code needed for signup verification email, so skip sending here
         res.status(201).json({id:email, email});
     } catch (error) {
         res.status(500).json({error: error.message});
