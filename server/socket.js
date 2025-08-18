@@ -14,19 +14,16 @@ function initSocket(server) {
 
 
     socket.on('invite-member', async (data) => {
-      // Prevent self-invitation
-      if (data.board_owner_id === data.email_member) {
+        if (data.board_owner_id === data.email_member) {
         return;
       }
       const admin = require('firebase-admin');
       const db = admin.firestore();
-      // Check for existing invitation for this board and email
       const existingInvites = await db.collection('invitations')
         .where('boardId', '==', data.boardId)
         .where('email_member', '==', data.email_member)
         .get();
       if (!existingInvites.empty) {
-        // Already invited, do not send again
         return;
       }
       const invite_id = `${data.boardId}_${data.email_member}_${Date.now()}`;
@@ -48,7 +45,6 @@ function initSocket(server) {
     });
 
     socket.on('respond-invite', async (data) => {
-      // Update invitation status in Firestore
       const admin = require('firebase-admin');
       const db = admin.firestore();
       await db.collection('invitations').doc(data.invite_id).update({
@@ -56,7 +52,6 @@ function initSocket(server) {
         respondedAt: new Date().toISOString(),
         member_id: data.member_id
       });
-      // Notify board owner (broadcast for now)
       io.emit('invite-response', data);
     });
   });

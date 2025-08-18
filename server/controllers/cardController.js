@@ -1,14 +1,3 @@
-exports.updateCardName = async (req, res) => {
-    const { cardId } = req.params;
-    const { name } = req.body;
-    const db = admin.firestore();
-    try {
-        await db.collection('cards').doc(cardId).update({ title: name });
-        res.status(200).json({ message: 'Card name updated successfully' });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
 const admin = require('firebase-admin'); 
 
 exports.createCards = async (req, res) => {
@@ -79,7 +68,6 @@ exports.moveCard = async (req, res) => {
 
     try {
         await db.collection('cards').doc(cardID).update({listId: newListID});
-        // Emit socket event for real-time update
         const { io } = require('../socket');
         io.emit('card-moved', { cardID, newListID });
         res.status(200).json({message: 'Card moved successfully'});
@@ -87,3 +75,15 @@ exports.moveCard = async (req, res) => {
         res.status(500).json({error: error.message});
     }
 }
+
+exports.updateCardName = async (req, res) => {
+    const { cardId } = req.params;
+    const { name } = req.body;
+    const db = admin.firestore();
+    try {
+        await db.collection('cards').doc(cardId).update({ title: name });
+        res.status(200).json({ message: 'Card name updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

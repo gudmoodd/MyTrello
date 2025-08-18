@@ -10,11 +10,11 @@ MyTrello is a Trello-like project management application with a React frontend a
 - Email notifications
 
 ## Project Structure
-```
+
 mytrello/
-├── client/   # React frontend
-├── server/   # Node.js/Express backend
-```
+├── client/   React frontend
+├── server/   Node.js/Express backend
+
 
 ### Client (Frontend)
 - Built with React
@@ -42,46 +42,45 @@ mytrello/
 - npm
 
 ### 1. Clone the repository
-```sh
+
 git clone https://github.com/<your-username>/mytrello.git
 cd mytrello
-```
+
 
 ### 2. Install dependencies
 #### Backend
-```sh
+
 cd server
 npm install
-```
+
 #### Frontend
-```sh
+
 cd ../client
 npm install
-```
+
 
 ### 3. Environment Variables
 Create a `.env` file in the `server/` directory. **Do not commit this file to GitHub.**
 Example:
-```
+
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 EMAIL_USER=your_email@example.com
 EMAIL_PASS=your_email_password
 CLIENT_URL=http://localhost:3000
-```
+
 
 ### 4. Start the backend server
-```sh
+
 cd server
 node index.js
-```
+
 
 ### 5. Start the frontend
-```sh
+
 cd client
 npm start
-```
+
 
 The frontend will run on [http://localhost:3000](http://localhost:3000) and the backend on [http://localhost:5000](http://localhost:5000) by default.
 

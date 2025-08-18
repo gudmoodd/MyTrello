@@ -99,7 +99,6 @@ exports.assignMember = async (req, res) => {
     }
 };
 
-// 7. Retrieve Assigned Members of a Task
 exports.getAssignedMembers = async (req, res) => {
     const { boardId, id, taskId } = req.params;
     const db = admin.firestore();
@@ -112,7 +111,6 @@ exports.getAssignedMembers = async (req, res) => {
     }
 };
 
-// 8. Remove Member Assignment from a Task
 exports.removeAssignment = async (req, res) => {
     const { boardId, id, taskId, memberId } = req.params;
     const db = admin.firestore();
@@ -130,7 +128,6 @@ exports.removeAssignment = async (req, res) => {
     }
 };
 
-// 10. Attach GitHub Pull Request, Commit, or Issue to a Task
 exports.attachGithub = async (req, res) => {
     const { boardId, cardId, taskId } = req.params;
     const { type, number } = req.body;
@@ -153,8 +150,6 @@ exports.attachGithub = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
-// 11. Retrieve Attached GitHub Attachments of a Task
 exports.getGithubAttachments = async (req, res) => {
     const { boardId, cardId, taskId } = req.params;
     const db = admin.firestore();
@@ -167,7 +162,6 @@ exports.getGithubAttachments = async (req, res) => {
     }
 };
 
-// 12. Remove GitHub Attachment from a Task
 exports.removeGithubAttachment = async (req, res) => {
     const { boardId, cardId, taskId, attachmentId } = req.params;
     const db = admin.firestore();

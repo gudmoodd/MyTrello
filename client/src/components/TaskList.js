@@ -14,7 +14,6 @@ export default function TaskList({ boardId, cardId, token }) {
       headers: { Authorization: `Bearer ${token}` }
     });
     setTasks(res.data);
-    // Fetch GitHub attachments for all tasks
     const attachments = {};
     for (const task of res.data) {
       try {

@@ -6,12 +6,10 @@ import BoardPage from "./pages/boardPage";
 import InviteResponsePage from "./pages/InviteResponsePage";
 
 function App() {
-    // Initialize token from localStorage
     const [token, setToken] = useState(localStorage.getItem('token') || null);
     const [email, setEmail] = useState("");
     const [selectedBoard, setSelectedBoard] = useState(null);
 
-    // When token changes, persist to localStorage
     React.useEffect(() => {
         if (token) {
             localStorage.setItem('token', token);
@@ -20,7 +18,6 @@ function App() {
         }
     }, [token]);
 
-    // Logout function
     const handleLogout = () => {
         setToken(null);
         setEmail("");

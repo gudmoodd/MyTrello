@@ -12,7 +12,6 @@ exports.signup = async (req, res) => {
             return res.status(401).json({error: 'Invalid verification code'});
         }
     await db.collection('users').doc(email).set({email});
-    // No code needed for signup verification email, so skip sending here
         res.status(201).json({id:email, email});
     } catch (error) {
         res.status(500).json({error: error.message});

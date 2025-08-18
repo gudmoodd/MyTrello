@@ -21,7 +21,7 @@ function CardComponent({ card, boardId, token, refreshCards, lists }) {
   });
   drag(ref);
 
-  // Rename logic
+
   const [renaming, setRenaming] = React.useState(false);
   const [newName, setNewName] = React.useState(card.title);
   const handleRename = async () => {

@@ -13,8 +13,6 @@ exports.updateBoardName = async (req, res) => {
 };
 
 exports.inviteMember = async (req, res) => {
-    // Invitation now handled via socket.io, not mailer
-    // This endpoint is deprecated
     res.status(410).json({ error: 'Use socket.io for inviting members.' });
 };
 exports.inviteMember = this.inviteMember;
@@ -58,19 +56,15 @@ exports.getBoards = async (req, res) => {
     const { email } = req.query;
     const db = admin.firestore();
     try {
-        // Boards where user is owner
         const ownerSnapshot = await db.collection('boards')
             .where('ownerEmail', '==', email)
             .get();
         const ownerBoards = ownerSnapshot.docs.map(doc => doc.data());
-
-        // Boards where user is a member
         const memberSnapshot = await db.collection('boards')
             .where('members', 'array-contains', email)
             .get();
         const memberBoards = memberSnapshot.docs.map(doc => doc.data());
 
-        // Boards where user has accepted invitation
         const inviteSnapshot = await db.collection('invitations')
             .where('member_id', '==', email)
             .where('status', '==', 'accepted')
@@ -83,7 +77,6 @@ exports.getBoards = async (req, res) => {
             invitedBoards = boardDocs.filter(doc => doc.exists).map(doc => doc.data());
         }
 
-        // Merge and deduplicate boards
         const allBoards = [...ownerBoards, ...memberBoards, ...invitedBoards];
         const uniqueBoards = Array.from(new Map(allBoards.map(b => [b.id, b])).values());
         res.status(200).json(uniqueBoards);
